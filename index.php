@@ -4,7 +4,7 @@ date_default_timezone_set("Europe/Paris");
 define('APP', 'app/');
 define('LIB', 'libraries/');
 define('ASSETS', LIB.'assets/');
-define('IMG', ASSETS.'/img');
+define('IMG', ASSETS.'img/');
 define('CSS', ASSETS.'css/');
 define('JS', ASSETS.'js/');
 define('CONF', LIB.'conf/');

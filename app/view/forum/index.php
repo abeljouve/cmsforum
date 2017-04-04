@@ -13,7 +13,6 @@
 <body>
   <?Php include(HEADER); ?>
   <div class="container">
-    #page forum
   </div>
   <script src="../<?=JS?>main.js"></script>
   <?php include(FOOTER); ?>

@@ -115,122 +115,121 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
       </nav>
     </div>
   </div>
-</div>
-<div class="modal fade login-modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-sm">
-    <div class="custom-modal">
-      <div class="modal-contol">
-        <span>Se connecter</span><a data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
-      </div>
-      <div class="modal-container">
-        <form class="modal-form" action="#" method="post">
-          <label for="username">Nom d'utilisateur</label>
-          <input type="text" name="username" value="<?=isset($_POST['username'])?$_POST['username']:''?>" required>
-          <label for="password">Mot de passe</label>
-          <input type="password" name="password" value="<?=isset($_POST['password'])?$_POST['password']:''?>" required>
-          <input class="button" type="submit" value="Se connecter"><input class="button" type="button" id="register" value="S'inscrire">
-        </form>
-        <p><?php
-          if (!empty($message["errors"]) && !isset($_POST["email"])) {
-            echo "<script type='text/javascript'>$('.login-modal').modal('show');</script>";
-            foreach ($message["errors"] as $value) {
-              echo '<div class="cutom-alert-danger">'.$value.'</div>';
-            }
-          }
-         ?></p>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade register-modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-sm">
-    <div class="custom-modal">
-      <div class="modal-contol">
-        <span>Inscription</span><a data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
-      </div>
-      <div class="modal-container">
-        <form class="modal-form" action="#" method="post">
-          <label for="username">Nom d'utilisateur</label>
-          <input type="text" name="username" value="<?=isset($_POST['username'])?$_POST['username']:''?>" required>
-          <label for="password">Mot de passe</label>
-          <input type="password" name="password" value="<?=isset($_POST['password'])?$_POST['password']:''?>" required>
-          <label for="confirmation">Mot de passe</label>
-          <input type="password" name="confirmation" value="<?=isset($_POST['confirmation'])?$_POST['confirmation']:''?>" required>
-          <label for="email">Adresse email</label>
-          <input type="email" name="email" value="<?=isset($_POST['email'])?$_POST['email']:''?>" required>
-          <input class="button" type="submit" value="S'inscrire">
-        </form>
-        <p><?php
-          if (!empty($message["errors"]) && isset($_POST["email"])) {
-            echo "<script type='text/javascript'>$('.register-modal').modal('show');</script>";
-            foreach ($message["errors"] as $value) {
-              echo '<div class="cutom-alert-danger">'.$value.'</div>';
-            }
-          }
-         ?></p>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade confirm-email-modal" tabindex="-1" role="dialog">
-  <div class="modal-dialog modal-sm">
-    <div class="custom-modal">
-      <div class="modal-contol">
-        <span>Vérification de l'adresse email</span><a data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
-      </div>
-      <div class="modal-container">
-        <p>Un email vous à été envoyé, il contient un code que vous devez saisir ci-dessous pour finaliser votre inscription. Vérifiez que le mail ne soit pas dans les indésirables.</p>
-        <form class="modal-form" action="#" method="post">
-          <label for="confirm-code">Code de confirmation</label>
-          <input type="text" name="confirm-code" required>
-          <input class="button" type="submit" value="Terminer l'inscription">
-        </form>
-        <form class="modal-form" action="#" method="post">
-          <input type="text" name="cancel-registration" hidden>
-          <input class="button" type="submit" value="Annuler l'inscription">
-        </form>
-          <?php
-          if (isset($_POST["cancel-registration"])) {
-            unset($_SESSION["temp_username"]);
-            unset($_SESSION["temp_password"]);
-            unset($_SESSION["temp_email"]);
-            unset($_SESSION["temp_confirm_code"]);
-            header("Location: ".$page);
-          }
-          if (isset($_POST["confirm-code"])) {
-            if (strtoupper($_POST["confirm-code"])==$_SESSION["temp_confirm_code"]) {
-              $stmt = $PDOStatement->prepare("INSERT INTO user (username, password, email, registration_date, last_login_date, ip) VALUES (:username, :password, :email, :registration_date, :last_login_date, :ip)");
-              $stmt->bindParam(":username", $_SESSION["temp_username"], PDO::PARAM_STR);
-              $stmt->bindParam(":password", md5($_SESSION["temp_password"]), PDO::PARAM_STR);
-              $stmt->bindParam(":email", $_SESSION["temp_email"], PDO::PARAM_STR);
-              $stmt->bindParam(":registration_date", date('Y-m-d H:i:s'), PDO::PARAM_STR);
-              $stmt->bindParam(":last_login_date", date('Y-m-d H:i:s'), PDO::PARAM_STR);
-              $stmt->bindParam(":ip", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
-              if ($stmt->execute()) {
-                unset($_SESSION["temp_confirm_code"]);
-                $stmt = $PDOStatement->prepare("SELECT * FROM user WHERE username=:username");
-                $stmt->bindParam(":username", $_SESSION["temp_username"], PDO::PARAM_STR);
-                $stmt->execute();
-                $res = $stmt->fetchAll()[0];
-                $_SESSION["id"]=$res["id"];
-                $_SESSION["username"]=$res["username"];
-                $_SESSION["email"]=$res["email"];
-                header("Location: ".$page);
-              }else {
-                array_push($message["errors"],"Une erreur est survenue lors de la creation du compte.<br>Error SQLSTATE[".$stmt->errorInfo()[0]."][".$stmt->errorInfo()[1]."]: ".$stmt->errorInfo()[2]);
+  <div class="modal fade login-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="custom-modal">
+        <div class="modal-contol">
+          <span>Se connecter</span><a data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
+        </div>
+        <div class="modal-container">
+          <form class="modal-form" action="#" method="post">
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" name="username" value="<?=isset($_POST['username'])?$_POST['username']:''?>" required>
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" value="<?=isset($_POST['password'])?$_POST['password']:''?>" required>
+            <input class="button" type="submit" value="Se connecter"><input class="button" type="button" id="register" value="S'inscrire">
+          </form>
+          <p><?php
+            if (!empty($message["errors"]) && !isset($_POST["email"])) {
+              echo "<script type='text/javascript'>$('.login-modal').modal('show');</script>";
+              foreach ($message["errors"] as $value) {
+                echo '<div class="cutom-alert-danger">'.$value.'</div>';
               }
-            }else {
-              array_push($message["errors"],"Le code saisie est incorrecte.");
             }
-          }
-          if (isset($_SESSION["temp_confirm_code"]) && $_SESSION["temp_confirm_code"]!="") {
-            echo "<script type='text/javascript'>$('.confirm-email-modal').modal('show');</script>";
-             foreach ($message["errors"] as $value) {
-               echo '<div class="cutom-alert-danger">'.$value.'</div>';
-             }
-          }
-          ?>
+           ?></p>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <div class="modal fade register-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="custom-modal">
+        <div class="modal-contol">
+          <span>Inscription</span><a data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
+        </div>
+        <div class="modal-container">
+          <form class="modal-form" action="#" method="post">
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" name="username" value="<?=isset($_POST['username'])?$_POST['username']:''?>" required>
+            <label for="password">Mot de passe</label>
+            <input type="password" name="password" value="<?=isset($_POST['password'])?$_POST['password']:''?>" required>
+            <label for="confirmation">Mot de passe</label>
+            <input type="password" name="confirmation" value="<?=isset($_POST['confirmation'])?$_POST['confirmation']:''?>" required>
+            <label for="email">Adresse email</label>
+            <input type="email" name="email" value="<?=isset($_POST['email'])?$_POST['email']:''?>" required>
+            <input class="button" type="submit" value="S'inscrire">
+          </form>
+          <p><?php
+            if (!empty($message["errors"]) && isset($_POST["email"])) {
+              echo "<script type='text/javascript'>$('.register-modal').modal('show');</script>";
+              foreach ($message["errors"] as $value) {
+                echo '<div class="cutom-alert-danger">'.$value.'</div>';
+              }
+            }
+           ?></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade confirm-email-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="custom-modal">
+        <div class="modal-contol">
+          <span>Vérification de l'adresse email</span><a data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i></a>
+        </div>
+        <div class="modal-container">
+          <p>Un email vous à été envoyé, il contient un code que vous devez saisir ci-dessous pour finaliser votre inscription. Vérifiez que le mail ne soit pas dans les indésirables.</p>
+          <form class="modal-form" action="#" method="post">
+            <label for="confirm-code">Code de confirmation</label>
+            <input type="text" name="confirm-code" required>
+            <input class="button" type="submit" value="Terminer l'inscription">
+          </form>
+          <form class="modal-form" action="#" method="post">
+            <input type="text" name="cancel-registration" hidden>
+            <input class="button" type="submit" value="Annuler l'inscription">
+          </form>
+            <?php
+            if (isset($_POST["cancel-registration"])) {
+              unset($_SESSION["temp_username"]);
+              unset($_SESSION["temp_password"]);
+              unset($_SESSION["temp_email"]);
+              unset($_SESSION["temp_confirm_code"]);
+              header("Location: ".$page);
+            }
+            if (isset($_POST["confirm-code"])) {
+              if (strtoupper($_POST["confirm-code"])==$_SESSION["temp_confirm_code"]) {
+                $stmt = $PDOStatement->prepare("INSERT INTO user (username, password, email, registration_date, last_login_date, ip) VALUES (:username, :password, :email, :registration_date, :last_login_date, :ip)");
+                $stmt->bindParam(":username", $_SESSION["temp_username"], PDO::PARAM_STR);
+                $stmt->bindParam(":password", md5($_SESSION["temp_password"]), PDO::PARAM_STR);
+                $stmt->bindParam(":email", $_SESSION["temp_email"], PDO::PARAM_STR);
+                $stmt->bindParam(":registration_date", date('Y-m-d H:i:s'), PDO::PARAM_STR);
+                $stmt->bindParam(":last_login_date", date('Y-m-d H:i:s'), PDO::PARAM_STR);
+                $stmt->bindParam(":ip", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
+                if ($stmt->execute()) {
+                  unset($_SESSION["temp_confirm_code"]);
+                  $stmt = $PDOStatement->prepare("SELECT * FROM user WHERE username=:username");
+                  $stmt->bindParam(":username", $_SESSION["temp_username"], PDO::PARAM_STR);
+                  $stmt->execute();
+                  $res = $stmt->fetchAll()[0];
+                  $_SESSION["id"]=$res["id"];
+                  $_SESSION["username"]=$res["username"];
+                  $_SESSION["email"]=$res["email"];
+                  header("Location: ".$page);
+                }else {
+                  array_push($message["errors"],"Une erreur est survenue lors de la creation du compte.<br>Error SQLSTATE[".$stmt->errorInfo()[0]."][".$stmt->errorInfo()[1]."]: ".$stmt->errorInfo()[2]);
+                }
+              }else {
+                array_push($message["errors"],"Le code saisie est incorrecte.");
+              }
+            }
+            if (isset($_SESSION["temp_confirm_code"]) && $_SESSION["temp_confirm_code"]!="") {
+              echo "<script type='text/javascript'>$('.confirm-email-modal').modal('show');</script>";
+               foreach ($message["errors"] as $value) {
+                 echo '<div class="cutom-alert-danger">'.$value.'</div>';
+               }
+            }
+            ?>
+        </div>
+      </div>
+    </div>
+  </div>
