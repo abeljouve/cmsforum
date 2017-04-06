@@ -2,11 +2,9 @@
 Thumbs.db
 ehthumbs.db
 
-libraries/conf/bdd.php
-
 # Folder config file
 Desktop.ini
-
+.htaccess
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
