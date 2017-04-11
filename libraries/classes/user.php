@@ -1,7 +1,7 @@
 <?php
 
 class User{
-    
+
     public $id;
     public $username;
     public $password;
@@ -15,10 +15,10 @@ class User{
     public $profile_img;
     public $signature;
     public $ip;
-    
-    
+
+
     public function __construct($id, $username, $password, $email, $birthday, $firstname, $name, $registration_date, $last_login_date, $rank, $profile_img, $signature, $ip){
-        
+
         $this->id = $id;
         $this->username=$username;
         $this->password=$password;
@@ -32,11 +32,11 @@ class User{
         $this->profile_img=$profile_img;
         $this->signature=$signature;
         $this->ip =$ip;
-        
-        
+
+
     }
-    
-    
+
+
 }
 
 ?>
