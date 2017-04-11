@@ -1,9 +1,9 @@
 <?php
 return array(
-  'hostname' => '127.0.0.1',
+  'hostname' => '149.91.91.223',
   'port' => 3306,
-  'username' => '',
-  'password' => '',
-  'dbname' => '',
+  'username' => 'cmsforum',
+  'password' => 'pAIhx8GgnvxzKxuk',
+  'dbname' => 'cmsforum',
 );
 ?>
