@@ -1,9 +1,9 @@
 <?php
 return array(
-  'hostname' => 'sql.majestrique.fr',
+  'hostname' => '149.91.91.223',
   'port' => 3306,
-  'username' => 'w3rx6l_forum',
-  'password' => 'azerty63',
-  'dbname' => 'w3rx6l_forum',
+  'username' => 'cmsforum',
+  'password' => 'pAIhx8GgnvxzKxuk',
+  'dbname' => 'cmsforum',
 );
 ?>
