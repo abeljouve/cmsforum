@@ -92,7 +92,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
           <ul class="nav navbar-nav">
             <li><a href="../">Accueil</a></li>
             <li><a href="/index.php/forum">Forum</a></li>
-            <li><a href="/index.php/chatbox">ChatBox</a></li>
+            <li><a href="/index.php/messaging">Messagingt</a></li>
             <li><a href="/index.php/galerie">Galerie</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
