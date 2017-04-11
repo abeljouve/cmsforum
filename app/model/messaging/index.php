@@ -9,7 +9,7 @@ class message{
      public function __construct($author, $mess){
           $author_id = $author;
           $message = $mess;
-          $message_date = date('Y-m-d-h-s');
+          $message_date = date('Y-m-d H:i:s');
      }
 
      public function getAuthor() :INT{
