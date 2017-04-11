@@ -1,7 +1,6 @@
 <?php
 
 include "libraries/classes/db.php";
-include(APP.'view/'.$page.'/toppage.php');
 class ForumController{
     
     public function handleRequest(){
@@ -15,7 +14,7 @@ class ForumController{
             foreach ($categories as $cat){
                 $cats[] = $cat["name"];
             }
-            include("../view/forum/categories.php");
+            
             break;
         } 
             
@@ -32,6 +31,6 @@ class ForumController{
 
     }
 }
-include(APP.'view/'.$page.'/bottompage.php');
+
 
 ?>
