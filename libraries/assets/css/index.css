@@ -1,0 +1,21 @@
+.latest-news {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+article header{
+  position: absolute;
+}
+article img {
+  width: 100%;
+  height: auto;
+  max-height: 100%;
+}
+.full-width {
+  flex-basis: 100%;
+  max-height: 500px;
+}
+.tier-width {
+  flex-basis: calc(100%/3);
+  float: left;
+}

@@ -66,6 +66,11 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         $_SESSION["id"]=$res["id"];
         $_SESSION["username"]=$res["username"];
         $_SESSION["email"]=$res["email"];
+        $stmt = $PDOStatement->prepare("UPDATE user SET last_login_date=:last_login_date, ip=:ip WHERE id=:id");
+        $stmt->bindParam(":last_login_date", $_SESSION["temp_username"], PDO::PARAM_STR);
+        $stmt->bindParam(":ip", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
+        $stmt->bindParam(":id", $res["id"], PDO::PARAM_INT);
+        $stmt->execute();
       }
     }else {
       array_push($message["errors"],"Le nom d'utilisateur saisie est déjà utilisé.");

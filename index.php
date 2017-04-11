@@ -15,6 +15,8 @@ define('FAVICON', IMG.'/favicon.png');
 $config = require(CONF.'/bdd.php');
 try {
 	$PDOStatement = new PDO('mysql:host='.$config['hostname'].';port='.$config['port'].';dbname='.$config['dbname'], $config['username'], $config['password']);
+	$PDOStatement->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+	$PDOStatement->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (Exception $e) {
 	die('Erreur : ' . $e->getMessage());
 }

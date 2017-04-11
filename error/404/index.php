@@ -13,7 +13,8 @@
 <body>
   <?Php include(HEADER); ?>
   <div class="container">
-    <h2>Erreur 404: La page demandé n'existe pas !</h2>
+    <h2>Oops, page not found !</h2>
+    <h4>You may have mis-typed the URL, please check your spelling or go to an existing page.</h4>
   </div>
   <script src="<?="../".JS?>main.js"></script>
   <?php include(FOOTER); ?>
