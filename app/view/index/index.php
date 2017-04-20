@@ -27,7 +27,8 @@
               <span class="article-author"><?=$res[0]["username"]?></span>
               <span class="article-date"><?=$res[0]["date"]?></span>
             </header>
-            <img srcset="<?=$res[0]['picture']?>" alt="" class="js-object-fit-img">
+            <div class="article-shadow"></div>
+            <img srcset="<?=$res[0]['picture']?>" alt="">
           </a>
         </article>
         <article class="tier-width">
@@ -38,7 +39,8 @@
               <span class="article-author"><?=$res[1]["username"]?></span>
               <span class="article-date"><?=$res[1]["date"]?></span>
             </header>
-            <img srcset="<?=$res[1]['picture']?>" alt="" class="js-object-fit-img">
+            <div class="article-shadow"></div>
+            <img srcset="<?=$res[1]['picture']?>" alt="">
           </a>
         </article>
         <article class="tier-width">
@@ -49,7 +51,8 @@
               <span class="article-author"><?=$res[2]["username"]?></span>
               <span class="article-date"><?=$res[2]["date"]?></span>
             </header>
-            <img srcset="<?=$res[2]['picture']?>" alt="" class="js-object-fit-img">
+            <div class="article-shadow"></div>
+            <img srcset="<?=$res[2]['picture']?>" alt="">
           </a>
         </article>
         <article class="tier-width">
@@ -60,7 +63,8 @@
               <span class="article-author"><?=$res[3]["username"]?></span>
               <span class="article-date"><?=$res[3]["date"]?></span>
             </header>
-            <img srcset="<?=$res[3]['picture']?>" alt="" class="js-object-fit-img">
+            <div class="article-shadow"></div>
+            <img srcset="<?=$res[3]['picture']?>" alt="">
           </a>
         </article>
       <?php }else {

@@ -42,12 +42,18 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
       for($i=0; $i<5; $i++) {
         $confirmcode .= $x[rand()%strlen($x)];
       }
-      $emailmsg = 'Bienvenue sur CMSFORUM,
-      Voici votre code de confirmation:'.strtoupper($confirmcode).'
-      ---------------
-      Ceci est un email automatique, merci de ne pas y répondre.';
-
-      mail($_POST["email"], "Confirmer votre adresse email", $emailmsg, "From: noreply@abeljouve.fr");
+      $emailmsg = require('mail/confirm_registration.php');
+      $replacevalue = array('{username}' => $_POST["username"],
+                            '{forumname}' => "CMS Forum",
+                            '{forumdomain}' => "cmsforum.abeljouve.fr",
+                            '{forumurl}' => "http://cmsforum.abeljouve.fr",
+                            '{confirmcode}' => $confirmcode);
+      $emailmsg = strtr($emailmsg, $replacevalue);
+      $headers = "From: noreply@abeljouve.fr \r\n";
+      $headers .= "List-Unsubscribe: <mailto:webmaster@abeljouve.fr?subject=unsubscribe> \r\n";
+      $headers .= "MIME-Version: 1.0\r\n";
+      $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+      mail($_POST["email"], "Confirmer votre adresse email", $emailmsg, $headers);
       array_push($message["success"], "Un email de confirmation vous à été envoyé.");
 
       $_SESSION["temp_username"]=$_POST["username"];

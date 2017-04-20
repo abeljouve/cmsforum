@@ -10,7 +10,7 @@ body {
   background-color: #131c23;
   border-color: #17232b;
   border-radius: 0px;
-  margin-bottom: none;
+  margin-bottom: 0 !important;
 }
 .navbar-default .navbar-text {
   color: #51c3fa;
