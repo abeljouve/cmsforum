@@ -1,29 +1,19 @@
 <?php 
+    include 'message.php';
 
-class message{
+    //JQuery retourne un tableau associatif POST en php on fait donc un switch qui selon la donnée transmise chope la bonne fonction avec la donnée si nécessaire en paramètre
 
-     private $author_id;
-     private $message;
-     private $message_date;
-
-     public function __construct($author, $mess){
-          $author_id = $author;
-          $message = $mess;
-          $message_date = date('Y-m-d H:i:s');
-     }
-
-     public function getAuthor() :INT{
-          return $author;
-     }
-
-     public function getText() :string{
-          return $message;
-     }
-
-     public function getMessage_date(){
-          return $message_date;
-     }
-}
+    if(isset($_POST['action']) && !empty($_POST['action'])){
+        switch($_POST['action']){
+            case "push_message":
+                $MessAdded = new $Message($_SESSION['id'],$_POST['content']); //We create the message
+                $GestMessage->addMessage($MessAdded);   //We send it
+                break;
+            
+            case "get_messages":
+                echo $GestMessage->getMessages();
+                break;
+        }
+    }
 
 ?>
-
