@@ -48,7 +48,7 @@
 
 setInterval(function() {
         $.ajax({
-            url: "../../model/messaging/index.php",
+            url: "../../app/model/messaging/index.php",
             method: "POST", // au lieu de get sinon ne rentre pas dans le switch de index.php
             data: { action: "get_messages" },
             dataType: "json",
