@@ -32,6 +32,7 @@
       <div id="editp" class="userpanel-content">
         <span><b>Nom d'utilisateur: </b><?=$res["username"]?></span>
         <span><b>Adresse e-mail: </b><?=$res["email"]?></span>
+        <span><b>Adresse IP</b></span>
         <form class="" action="" method="post">
           <input type="password" name="password" value="">
           <input type="password" name="confirm_password" value="">

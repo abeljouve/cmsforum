@@ -53,12 +53,12 @@ setInterval(function() {
             data: { action: "get_messages" },
             dataType: "json",
             success: function(data) {
-                for (i = 0; i < length(data); i++) {
+                for (i = 0; i < data.length; i++) {
                     var id = "<?=$_SESSION['id']?>";
                     if (data[i]["author_id"] == id) {
-                        $(".messaging_messages_space").html("<span class=\"right\">" + data[i][message] + "</span><div class=\"clear\"></div>");
+                        $(".messaging_messages_space").html("<span class=\"right\">" + data[i]["message"] + "</span><div class=\"clear\"></div>");
                     } else {
-                        $(".messaging_messages_space").html("<span class=\"left\">" + data[i][message] + "</span><div class=\"clear\"></div>");
+                        $(".messaging_messages_space").html("<span class=\"left\">" + data[i]["message"] + "</span><div class=\"clear\"></div>");
                     }
                 }
             }

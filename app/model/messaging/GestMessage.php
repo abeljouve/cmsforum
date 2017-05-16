@@ -1,12 +1,12 @@
 <?php
 
 class GestMessage{
-     
+
      public function addMessage($Message){
           $text = $Message->getText();
           $author = $Message->getAuthor();
           $date = $Message->getMessage_date();
-          $sth = $PDOStatement->prepare("INSERT INTO MESSAGING VALUES ('','?','?','?')");
+          $sth = $PDOStatement->prepare("INSERT INTO messaging VALUES ('','?','?','?')");
           $sth->bindParam(1, $author, PDO::PARAM_INT);
           $sth->bindParam(2, $text, PDO::PARAM_STR);
           $sth->bindParam(3, $date, PDO::PARAM_DATE);
@@ -14,9 +14,10 @@ class GestMessage{
      }
 
      public function getMessages(){
-          $sth = $PDOStatement->prepare("SELECT MESSAGING.*, USER.username, USER.profile_img FROM MESSAGING INNER JOIN USER ON MESSAGING.uthor_idr=USER.id ORDER BY message_date DESC");
+          $pdo = db::getInstance();
+          $sth = $pdo->prepare("SELECT messaging.*, user.username, user.profile_img FROM messaging INNER JOIN user ON messaging.author_id=user.id ORDER BY message_date DESC");
           $sth->execute();
-          return json_encode($sth->fetch_assoc());    
+          return json_encode($sth->fetchAll());
      }
 }
 
