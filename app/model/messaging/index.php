@@ -8,11 +8,12 @@
         switch($_POST['action']){
             case "push_message":
                 $MessAdded = new $Message($_SESSION['id'],$_POST['content']); //We create the message
-                $GestMessage::addMessage($MessAdded);   //We send it
+                $GestMessage = new GestMessage();
+                $GestMessage->addMessage($MessAdded);   //We send it
                 break;
             
             case "get_messages":
-                echo $GestMessage::getMessages();
+                echo $GestMessage->getMessages();
                 break;
         }
     }
