@@ -16,6 +16,9 @@ function __autoload($name){
             case "get_messages":
                 echo GestMessage::getMessages();
                 break;
+
+            case "get_connected":
+            echo GestMessage::getConnectedUser();
         }
     }
 

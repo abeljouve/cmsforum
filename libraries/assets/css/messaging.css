@@ -1,11 +1,25 @@
 .messaging_messages_space {
-    background-color: white;
+    background-color: #333333;
     height: 450px;
+    z-index: 1;
 }
 
 .messaging_connected_users {
-    background-color: white;
+    background-color: #333333;
     height: 450px;
+    z-index: 1;
+    border-left: solid #bfbfbf 3px;
+    display: none;
+}
+
+@media screen and (min-width: 970px) {
+    .messaging_connected_users {
+        background-color: #333333;
+        height: 450px;
+        z-index: 1;
+        border-left: solid #bfbfbf 3px;
+        display: block;
+    }
 }
 
 .stroke_zone {
@@ -15,22 +29,13 @@
 }
 
 .envoyer {
-    background-color: #333333;
-    color: white;
+    background-color: white;
+    color: black;
     font-weight: bold;
     border-radius: 4px;
-    border-color: #333333;
+    border-color: white;
     position: absolute;
     margin-left: 1%;
-}
-
-#vertic-bar {
-    background-color: #bfbfbf;
-    height: 80%;
-    margin-top: 40px;
-    margin-left: 100%;
-    width: 3px;
-    border-radius: 5px;
 }
 
 #horiz-bar {
@@ -40,9 +45,35 @@
     margin-bottom: 10px;
     width: 80%;
     border-radius: 5px;
+    z-index: 4;
 }
 
-pan {
+#sendmessage {
+    background-color: #333333;
+}
+
+#type {
+    background-color: #0f0f0f;
+    border: none;
+}
+
+
+/*Message design*/
+
+.profimg {
+    width: 25px;
+    height: 25px;
+}
+
+.date {
+    position: relative;
+}
+
+.profanddate {
+    max-width: 42px;
+}
+
+span {
     display: inline-block;
     max-width: 49%;
     background-color: #0080ff;
@@ -54,6 +85,7 @@ pan {
     border: none;
     box-shadow: black 2px 2px 1px;
     word-wrap: break-word;
+    z-index: 4;
 }
 
 left {
@@ -74,6 +106,7 @@ span.left:before {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     border-right: 15px solid #0080ff;
+    z-index: 4;
 }
 
 
@@ -90,6 +123,7 @@ span.right:before {
     border-top: 8px solid transparent;
     border-bottom: 8px solid transparent;
     border-left: 15px solid #33cc33;
+    z-index: 4;
 }
 
 
@@ -98,6 +132,7 @@ span.right:before {
 span.right {
     float: right;
     background-color: #33cc33;
+    z-index: 4;
 }
 
 .clear {

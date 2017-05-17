@@ -16,12 +16,13 @@ setInterval(function() {
             data: { action: "get_messages" },
             dataType: "json",
             success: function(data) {
+                var message_space = $(".messaging_messages_space").innerHTML;
                 for (i = 0; i < length(data); i++) {
                     var id = "<?=$_SESSION['id']?>";
                     if (data[i]["author_id"] == id) {
-                        $(".messaging_messages_space").html("<span class=\"right\">" + data[i][message] + "</span><div class=\"clear\"></div>");
+                        $(".messaging_messages_space").innerHTML=message_space+"<span class=\"right\">" + data[i][message] + "</span><div class=\"clear\"></div>";
                     } else {
-                        $(".messaging_messages_space").html("<span class=\"left\">" + data[i][message] + "</span><div class=\"clear\"></div>");
+                        $(".messaging_messages_space").innerHTML=message_space+"<span class=\"left\">" + data[i][message] + "</span><div class=\"clear\"></div>";
                     }
                 }
             }

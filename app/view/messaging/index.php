@@ -7,33 +7,37 @@
   <link href="../<?=CSS?>bootstrap.min.css" rel="stylesheet">
   <link href="../<?=CSS?>font-awesome.min.css" rel="stylesheet">
   <link href="../<?=CSS?>main.css" rel="stylesheet">
-  <link href="../<?=CSS?>messaging.css" rel="stylesheet">
   <script src="../<?=JS?>jquery.min.js"></script>
   <script src="../<?=JS?>bootstrap.min.js"></script>
+  <link href="../<?=CSS?>messaging.css" rel="stylesheet">
 </head>
 <body>
   <?Php include(HEADER); ?>
-  <div class="row">
-    <!-- MESSAGES SPACE-->
-    <div class="col-lg-12">
-      <div class="col-sm-8 col-lg-8 col-md-8 messaging_messages_space">
-      <div id="vertic-bar"></div>
-      <div id="write-space">
-        <div id="horiz-bar"></div>
-        <form id="sendmessage" method="POST" action="#" class="">
-          <input type="text" class="stroke_zone" name="message" maxlenght="160" placeholder="Tapez votre message: ">
-          <input type="submit" class="envoyer" name="envoyer" placeholder="Tapez votre message: ">
-        </form>
-      </div>
+  <?php if(isset($_SESSION['id']) && !empty($_SESSION['id'])){ ?>
+    <div id="sendmessage" class="col-sm-12 col-md-12 col-lg-12">
+        <!-- MESSAGES SPACE-->
+        <div class="col-sm-12 col-lg-8 col-md-8 messaging_messages_space"></div>
+        <!-- END MESSAGES SPACE-->
+        
+        <!-- USERS CONNECTED SPACE-->
+            <div class="col-md-4 col-lg-4 messaging_connected_users">
+                <p style="font-size: 18px; margin-top: 20px; color: white;">Utilisateurs connect&eacutes</p>
+            </div>
+        <!-- END USERS CONNECTED SPACE-->
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="horiz-bar"></div>
+            </div>
+        </div>
+        <!-- FORM -->
+            <form method="POST" action="#" class="">
+                <input type="text" id="type" class="stroke_zone" name="message" maxlenght="160" placeholder="Tapez votre message: ">
+                <input type="submit" class="envoyer" name="envoyer" placeholder="Tapez votre message: ">
+            </form>
+            <br>
+        <!-- END FORM -->
     </div>
-    <!-- END MESSAGES SPACE-->
-    <!-- USERS CONNECTED SPACE-->
-    <div class="col-md-4 messaging_connected_users">
-      <p style="font-size: 18px; margin-top: 20px; color: #333333;">Utilisateurs connect&eacutes</p>
-    </div>
-    <!-- END USERS CONNECTED SPACE-->
-    </div>
-  </div>
+  <br><br>
   <script src="../<?=JS?>main.js"></script>
   <script>
     //Case where we add a message
@@ -45,26 +49,47 @@
         });
     });
 
-
-setInterval(function() {
-        $.ajax({
-            url: "../../app/model/messaging/index.php",
-            method: "POST", // au lieu de get sinon ne rentre pas dans le switch de index.php
-            data: { action: "get_messages" },
-            dataType: "json",
-            success: function(data) {
-                for (i = 0; i < data.length; i++) {
-                    var id = "<?=$_SESSION['id']?>";
-                    if (data[i]["author_id"] == id) {
-                        $(".messaging_messages_space").html("<span class=\"right\">" + data[i]["message"] + "</span><div class=\"clear\"></div>");
-                    } else {
-                        $(".messaging_messages_space").html("<span class=\"left\">" + data[i]["message"] + "</span><div class=\"clear\"></div>");
+    setInterval(function() {
+            $.ajax({
+                url: "../../app/model/messaging/index.php",
+                method: "POST", 
+                data: { action: "get_messages" },
+                dataType: "json",
+                success: function(data) {
+                    var count=0;
+                    for (i = 0; i < data.length; i++) {
+                        count++;
+                        $(".messaging_connected_users").html("<div class=\"profanddate\"><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"></div>;
                     }
                 }
-            }
-        });
-    }, 1000)
-</script>
+            });
+        }, 1000)
+
+        setInterval(function() {
+            $.ajax({
+                url: "../../app/model/messaging/index.php",
+                method: "POST", 
+                data: { action: "get_connected" },
+                dataType: "json",
+                success: function(data) {
+                    var count=0;
+                    for (i = 0; i < data.length; i++) {
+                        if (data[i]["author_id"] == id) {
+                            $(".messaging_messages_space").html("<span class=\"right\"><div class=\"profanddate\"><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>");
+                        } else {
+                            $(".messaging_messages_space").html("<span class=\"left\"><div class=\"profanddate\"><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>");
+                        }
+                    }
+                }
+            });
+        }, 1000)
+    </script>
+    <?php } else{ ?>
+        <h1>Pour pouvoir utiliser le service de messagerie instantan&eacutee veuillez vous connecter svp</h1>
+        <script>
+            $('.login-modal').modal('show'); //The modal for connection appears
+        </script>
+    <?php } ?>
   <?php include(FOOTER); ?>
 </body>
 </html>
