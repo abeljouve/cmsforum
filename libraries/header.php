@@ -1,4 +1,10 @@
 <?php
+if (isset($_SESSION["id"])) {
+  $stmt = $PDOStatement->prepare("UPDATE user SET last_login_date=NOW(), ip=:ip WHERE id=:id");
+  $stmt->bindParam(":ip", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
+  $stmt->bindParam(":id", $_SESSION["id"], PDO::PARAM_INT);
+  $stmt->execute();
+}
 $message = array('success' => array(), 'errors' => array());
 $progress = true;
 if (isset($_POST["username"]) && isset($_POST["password"])) {
@@ -72,14 +78,18 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         $_SESSION["id"]=$res["id"];
         $_SESSION["username"]=$res["username"];
         $_SESSION["email"]=$res["email"];
-        $stmt = $PDOStatement->prepare("UPDATE user SET last_login_date=:last_login_date, ip=:ip WHERE id=:id");
-        $stmt->bindParam(":last_login_date", $_SESSION["temp_username"], PDO::PARAM_STR);
+        $_SESSION["profile_img"]=$res["profile_img"];
+        $profile_img = "https://www.gravatar.com/avatar/".md5(strtolower(trim($res["email"])))."?d=".urlencode($_SERVER['SERVER_NAME']."/libraries/assets/img/default.jpg")."&s=64";
+        $stmt = $PDOStatement->prepare("UPDATE user SET last_login_date=NOW(), ip=:ip, profile_img=:profile_img WHERE id=:id");
         $stmt->bindParam(":ip", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
+        $stmt->bindParam(":profile_img", $profile_img, PDO::PARAM_STR);
         $stmt->bindParam(":id", $res["id"], PDO::PARAM_INT);
         $stmt->execute();
+      }else {
+        array_push($message["errors"],"Le mot de passe saisie n'ets pas le bon!.");
       }
     }else {
-      array_push($message["errors"],"Le nom d'utilisateur saisie est déjà utilisé.");
+      array_push($message["errors"],"Le nom d'utilisateur saisie n'existe pas.");
     }
   }
 }
@@ -109,7 +119,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
           <ul class="nav navbar-nav navbar-right">
             <li class="<?=isset($_SESSION['id'])?"connected":"disconnected"?>">
               <?php if(isset($_SESSION['id'])){ ?>
-              <a class="dropdown-toggle logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="http://s.gravatar.com/avatar/9694fdb1bee111261392c06a0894b05a?s=80"></a>
+              <a class="dropdown-toggle logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="<?=$_SESSION["profile_img"]?>"></a>
               <ul class="dropdown-menu">
                 <li><a href="/index.php/userpanel">Mon profil</a></li>
                 <li><a href="#">.....</a></li>
@@ -209,12 +219,12 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
             }
             if (isset($_POST["confirm-code"])) {
               if (strtoupper($_POST["confirm-code"])==$_SESSION["temp_confirm_code"]) {
-                $stmt = $PDOStatement->prepare("INSERT INTO user (username, password, email, registration_date, last_login_date, ip) VALUES (:username, :password, :email, :registration_date, :last_login_date, :ip)");
+                $profile_img = "https://www.gravatar.com/avatar/".md5(strtolower(trim($_SESSION["temp_email"])))."?d=".urlencode($_SERVER['SERVER_NAME']."/libraries/assets/img/default.jpg")."&s=64";
+                $stmt = $PDOStatement->prepare("INSERT INTO user (username, password, email, registration_date, last_login_date, profile_img, ip) VALUES (:username, :password, :email, NOW(), NOW(), :profile_img, :ip)");
                 $stmt->bindParam(":username", $_SESSION["temp_username"], PDO::PARAM_STR);
                 $stmt->bindParam(":password", md5($_SESSION["temp_password"]), PDO::PARAM_STR);
                 $stmt->bindParam(":email", $_SESSION["temp_email"], PDO::PARAM_STR);
-                $stmt->bindParam(":registration_date", date('Y-m-d H:i:s'), PDO::PARAM_STR);
-                $stmt->bindParam(":last_login_date", date('Y-m-d H:i:s'), PDO::PARAM_STR);
+                $stmt->bindParam(":profile_img", $profile_img, PDO::PARAM_STR);
                 $stmt->bindParam(":ip", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
                 if ($stmt->execute()) {
                   unset($_SESSION["temp_confirm_code"]);
@@ -225,6 +235,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
                   $_SESSION["id"]=$res["id"];
                   $_SESSION["username"]=$res["username"];
                   $_SESSION["email"]=$res["email"];
+                  $_SESSION["profile_img"]=$res["profile_img"];
                   header("Location: ".$page);
                 }else {
                   array_push($message["errors"],"Une erreur est survenue lors de la creation du compte.<br>Error SQLSTATE[".$stmt->errorInfo()[0]."][".$stmt->errorInfo()[1]."]: ".$stmt->errorInfo()[2]);

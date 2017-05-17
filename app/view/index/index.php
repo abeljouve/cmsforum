@@ -16,8 +16,8 @@
   <div class="row">
     <div class="latest-news col-lg-12">
       <?php
-      if ($stmt->rowCount()>0) {
-        $res = $stmt->fetchAll();
+      if ($stmt0->rowCount()>0) {
+        $res = $stmt0->fetchAll();
         ?>
         <article class="full-width">
           <a href="#">
