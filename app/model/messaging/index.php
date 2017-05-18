@@ -9,7 +9,7 @@ function __autoload($name){
     if(isset($_POST['action']) && !empty($_POST['action'])){
         switch($_POST['action']){
             case "push_message":
-                $MessAdded = new $Message($_SESSION['id'],$_POST['content']); //We create the message
+                $MessAdded = new Message($_POST['id'],$_POST['content']); //We create the message
                 GestMessage::addMessage($MessAdded);   //We send it
                 break;
 

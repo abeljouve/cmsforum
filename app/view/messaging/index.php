@@ -18,7 +18,7 @@
         <!-- MESSAGES SPACE-->
         <div class="col-sm-12 col-lg-8 col-md-8 messaging_messages_space"></div>
         <!-- END MESSAGES SPACE-->
-        
+
         <!-- USERS CONNECTED SPACE-->
             <div class="col-md-4 col-lg-4 messaging_connected_users">
                 <p style="font-size: 18px; margin-top: 20px; color: white;">Utilisateurs connect&eacutes</p>
@@ -32,7 +32,7 @@
         <!-- FORM -->
             <form method="POST" action="#" class="">
                 <input type="text" id="type" class="stroke_zone" name="message" maxlenght="160" placeholder="Tapez votre message: ">
-                <input type="submit" class="envoyer" name="envoyer" placeholder="Tapez votre message: ">
+                <button id="envoyer" type="button" name="button">Envoyer</button>
             </form>
             <br>
         <!-- END FORM -->
@@ -41,48 +41,49 @@
   <script src="../<?=JS?>main.js"></script>
   <script>
     //Case where we add a message
-    $('form#envoiemessage').submit(function(event) {
+    var id = "<?=$_SESSION['id']?>";
+    $('#envoyer').click(function() {
+      alert("coucou"+$('#type').val());
         $.ajax({
             url: "../../../app/model/messaging/index.php",
             method: "POST",
-            data: { action: "push_message", content: $('form#sendmessage').value }
+            data: { action: "push_message", content: $('#type').val(), id:id }
         });
     });
-
+    var html = $(".messaging_messages_space").html();
     setInterval(function() {
             $.ajax({
                 url: "../../app/model/messaging/index.php",
-                method: "POST", 
+                method: "POST",
                 data: { action: "get_connected" },
                 dataType: "json",
                 success: function(data) {
                     var count=0;
                     for (i = 0; i < data.length; i++) {
                         count++;
-                        $(".messaging_connected_users").html("<div class=\"profanddate\"><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"><p>" + data[i][username] + "</p></div>;
+                        $(".messaging_connected_users").html("<div class=\"profanddate\"><img alt='"+count+"' src='" + data[i]["profile_img"] + "' class=\"profimg\"><p>" + data[i]["username"] + "</p></div>");
                     }
                 }
             });
-        }, 1000)
-
-        setInterval(function() {
             $.ajax({
                 url: "../../app/model/messaging/index.php",
-                method: "POST", 
+                method: "POST",
                 data: { action: "get_messages" },
                 dataType: "json",
                 success: function(data) {
                     var count=0;
+                    html="";
                     for (i = 0; i < data.length; i++) {
                         if (data[i]["author_id"] == id) {
-                            $(".messaging_messages_space").html("<span class=\"right\"><div class=\"profanddate\"><p>" + data[i][username] + "</p><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>");
+                            html+="<span class=\"right\"><div class=\"profanddate\"><p>" + data[i]["username"] + "</p><img alt='"+count+"' src='" + data[i]["profile_img"] + "' class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>";
                         } else {
-                            $(".messaging_messages_space").html("<span class=\"left\"><div class=\"profanddate\"><p>" + data[i][username] + "</p><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>");
+                            html+="<span class=\"left\"><div class=\"profanddate\"><p>" + data[i]["username"] + "</p><img alt='"+count+"' src='" + data[i]["profile_img"] + "' class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>";
                         }
                     }
                 }
             });
-        }, 1000)
+            $(".messaging_messages_space").html(html);
+        }, 1000);
     </script>
     <?php } else{ ?>
         <h1>Pour pouvoir utiliser le service de messagerie instantan&eacutee veuillez vous connecter svp</h1>

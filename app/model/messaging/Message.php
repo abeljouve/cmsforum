@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class Message{
 
@@ -7,21 +7,21 @@ class Message{
      private $message_date;
 
      public function __construct($author, $mess){
-          $author_id = $author;
-          $message = $mess;
-          $message_date = date('Y-m-d H:i:s');
+          $this->author_id = $author;
+          $this->message = $mess;
+          $this->message_date = date('Y-m-d H:i:s');
      }
 
      public function getAuthor(){
-          return $author;
+          return $this->author_id;
      }
 
      public function getText(){
-          return $message;
+          return $this->message;
      }
 
      public function getMessage_date(){
-          return $message_date;
+          return $this->message_date;
      }
 }
 

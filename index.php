@@ -1,6 +1,7 @@
 <?php
 session_start();
 date_default_timezone_set("Europe/Paris");
+setlocale(LC_TIME, 'fr','fr_FR','fr_FR@euro','fr_FR.utf8','fr-FR','fra');
 define('APP', 'app/');
 define('LIB', 'libraries/');
 define('ASSETS', LIB.'assets/');

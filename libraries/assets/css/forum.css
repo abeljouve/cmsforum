@@ -1,0 +1,183 @@
+@font-face {
+  font-family: "Electrolize";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Electrolize"), local("Electrolize-Regular"), url("https://fonts.gstatic.com/s/electrolize/v5/DDy9sgU2U7S4xAwH5thnJ4bN6UDyHWBl620a-IRfuBk.woff") format("woff");
+}
+@font-face {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Open Sans"), local("OpenSans"), url("http://fonts.gstatic.com/s/opensans/v10/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff") format("woff");
+}
+/*##########  Forum  ##########*/
+.forum-bloc{
+border-width: 1px;
+border-style: solid;
+border-color: #286E80 #0D1F2C #0D1F2C;
+-moz-border-top-colors: none;
+-moz-border-right-colors: none;
+-moz-border-bottom-colors: none;
+-moz-border-left-colors: none;
+border-image: none;
+position: relative;
+background: none repeat scroll 0% 0% #15212A;
+margin:5px;
+padding:5px;
+}
+/*Category*/
+.forum_category{
+background: none repeat scroll 0% 0% #15212A;
+margin:5px;
+padding:5px;
+text-align:center;
+font-size: 24px;
+color: #00E7FF;
+text-shadow: 0px 0px 20px #09F;
+font-family: "Electrolize";
+text-transform: uppercase;
+font-weight: bold;
+}
+/*Subcategory*/
+.forum_subcategory{
+background: none repeat scroll 0% 0% rgba(15, 24, 31, 0.77);
+margin:5px;
+border-width: 1px;
+border-style: solid;
+border-color: #286E80 #1E2F41 #1E2F41;
+position: relative;
+border-left: 4px solid #0CF;
+transition: all .2s ease-in;
+-moz-transition: all .2s ease-in;
+-webkit-transition: all .2s ease-in;
+-o-transition: all .2s ease-in;
+}
+.forum_subcategory:hover{
+background: rgba(0, 98, 255, 0.1);
+}
+.forum_subcategory_title a{
+color: #00E7FF;
+font-weight: bold;
+font-family: "Electrolize";
+text-decoration: none;
+}
+.forum_subcategory_title a:hover{
+text-shadow: 0px 0px 20px #09F;
+}
+.forum_subcategory_desc{
+color: #BBB;
+font-family: "Electrolize";
+text-decoration: none;
+font-size:11px;
+}
+
+.fil_arriane {
+padding:5px;
+text-align:left;
+font-size: 12px;
+color: #00E7FF;
+text-shadow: 0px 0px 20px #09F;
+font-weight: normal;
+font-family: "Electrolize";
+text-transform: uppercase;
+}
+.img_profil{
+display: inline-block;
+max-width: 100%;
+height: auto;
+border: 1px solid #0CF;
+position: relative;
+padding: 6px;
+transition: all 2.2s ease-in-out 0s;
+}
+.post_body {
+  width: 100%;
+  padding: 20px;
+  font-size: 13px;
+  line-height: 18px;
+  font-family: "open sans";
+  color: #FFF;
+}
+.post_bottom_name {
+  width: 100%;
+  padding: 20px;
+  font-size: 23px;
+  font-family: "open sans";
+  font-weight: bold;
+}
+.post_bottom_rank {
+  margin-top:5px;
+  width: 100%;
+  padding: 20px;
+  font-size: 15px;
+  font-family: "open sans";
+}
+
+ul.topiclist {
+    list-style-type: none;
+    margin: 0px 0px 10px;
+    display: block;
+}
+
+ul.topiclist li {
+    height: 40px;
+    background: none repeat scroll 0% 0% rgba(15, 24, 31, 0.84);
+    border-left: 4px solid #0CF;
+    margin-bottom: 1px;
+    color: #FFF;
+    transition: all 0.5s ease 0s;
+}
+
+ul.topiclist dd {
+    line-height: 40px;
+    float: left;
+    border-left: 1px solid #0CF;
+    overflow: hidden;
+    height: 40px;
+}
+ul.topiclist dt {
+    background-repeat: no-repeat;
+    background-size: 34px auto;
+    background-position: 3px center;
+    font-size: 14px;
+    padding: 0px 0px 0px 45px;
+    width: 45%;
+    float: left;
+    overflow: hidden;
+    height: 40px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-shadow: 0px 0px 4px #000;
+    line-height: 40px;
+}
+ul.topiclist dd.reponse {
+    width: 10%;
+    text-align: center;
+    font-size: 11px;
+}
+ul.topiclist dd.auteur {
+    width: 15%;
+    text-align: center;
+    font-size: 13px;
+}
+ul.topiclist dd.lastpost {
+    width: 25%;
+}
+ul.topiclist p {
+    margin-top: -30px;
+    font-size: 10px;
+    color: #838383;
+}
+ul.topiclist a {
+    color: #51C3FA;
+	text-decoration:none;
+}
+ul.topiclist dd.lastpost div.beurk {
+    height: 100%;
+    width: 92%;
+    padding: 5px 10px;
+    line-height: 15px;
+    text-align: left;
+    overflow: hidden;
+    font-size: 10px;
+}
