@@ -53,13 +53,13 @@
             $.ajax({
                 url: "../../app/model/messaging/index.php",
                 method: "POST", 
-                data: { action: "get_messages" },
+                data: { action: "get_connected" },
                 dataType: "json",
                 success: function(data) {
                     var count=0;
                     for (i = 0; i < data.length; i++) {
                         count++;
-                        $(".messaging_connected_users").html("<div class=\"profanddate\"><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"></div>;
+                        $(".messaging_connected_users").html("<div class=\"profanddate\"><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"><p>" + data[i][username] + "</p></div>;
                     }
                 }
             });
@@ -69,15 +69,15 @@
             $.ajax({
                 url: "../../app/model/messaging/index.php",
                 method: "POST", 
-                data: { action: "get_connected" },
+                data: { action: "get_messages" },
                 dataType: "json",
                 success: function(data) {
                     var count=0;
                     for (i = 0; i < data.length; i++) {
                         if (data[i]["author_id"] == id) {
-                            $(".messaging_messages_space").html("<span class=\"right\"><div class=\"profanddate\"><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>");
+                            $(".messaging_messages_space").html("<span class=\"right\"><div class=\"profanddate\"><p>" + data[i][username] + "</p><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>");
                         } else {
-                            $(".messaging_messages_space").html("<span class=\"left\"><div class=\"profanddate\"><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>");
+                            $(".messaging_messages_space").html("<span class=\"left\"><div class=\"profanddate\"><p>" + data[i][username] + "</p><img alt=\""count"\" src=\"" + data[i]["profile_img"] + "\" class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>");
                         }
                     }
                 }

@@ -22,7 +22,7 @@ class GestMessage{
 
      public function getConnectedUser(){
          $pdo = db::getInstance();
-          $sth = $pdo->prepare("SELECT username, profile_img FROM user WHERE datdiff(NOW(),last_login_date) < 1");
+          $sth = $pdo->prepare("SELECT username, profile_img FROM user WHERE datediff(minute,NOW(),last_login_date) < 5");
           $sth->execute();
           return json_encode($sth->fetchAll());
      }
