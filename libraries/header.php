@@ -122,7 +122,6 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
               <a class="dropdown-toggle logged" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><img src="<?=$_SESSION["profile_img"]?>"></a>
               <ul class="dropdown-menu">
                 <li><a href="/index.php/userpanel">Mon profil</a></li>
-                <li><a href="#">.....</a></li>
                 <li><a href="/index.php/logout">Deconexion</a></li>
               </ul>
               <?php }else{ ?>

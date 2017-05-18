@@ -31,9 +31,9 @@
       </div>
       <div id="editp" class="userpanel-content">
         <img src="<?=$_SESSION["profile_img"]?>"><br>
-        <span><b>Nom d'utilisateur:&nbsp;</b><?=$res["username"]?></span><br>
-        <span><b>Adresse e-mail:&nbsp;</b><?=$res["email"]?></span><br>
-        <span><b>Adresse IP:&nbsp;</b></span><?=$res["ip"]?><br>&nbsp;<br>
+        <span><b>Nom d'utilisateur:&nbsp;</b><?=$res0["username"]?></span><br>
+        <span><b>Adresse e-mail:&nbsp;</b><?=$res0["email"]?></span><br>
+        <span><b>Adresse IP:&nbsp;</b></span><?=$res0["ip"]?><br>&nbsp;<br>
         <form class="" action="" method="post">
           <label for="password">Changer votre mot de passe</label><br>
           <input id="password" type="password" name="password" placeholder="******************"><br>
