@@ -7,3 +7,4 @@ $controller = new ForumController();
 $controller->handleRequest();
 include(APP.'view/'.$page.'/bottompage.php');
 ?>
+    

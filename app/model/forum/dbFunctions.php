@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 class DbFunctions{
-
-     private static $instance = NULL;
+    
+    private static $instance = NULL;
     
     private function __construct() {
     }
@@ -21,7 +21,7 @@ class DbFunctions{
             }
         }
         return self::$instance;
-    }
-
+    }Z
+    
 }
 ?>
