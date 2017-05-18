@@ -87,4 +87,6 @@ function jValidateEmailUsingSMTP($sToEmail, $sFromDomain = "gmail.com", $sFromEm
 }
 $email = "contaiuytrct@abeljouve.fr";
 
-var_dump(jValidateEmailUsingSMTP($email, "gmail.com", "email@gmail.com"));
+//var_dump(jValidateEmailUsingSMTP($email, "gmail.com", "email@gmail.com"));
+
+var_dump(parse_url($_SERVER['REQUEST_URI']));

@@ -22,7 +22,8 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
       $progress=false;
       array_push($message["errors"],"Les deux mots de passes doivent êtres identiques.");
     }
-    # Vérification du format de l'adresse email et on regarde que le domaine possède un enregistrement dns MX.
+    # Vérification du format de l'adresse email et on regarde que le domaine possède un enregistrement dns MX, 
+    # cela permet de savoir si le serveur qui possède le domaine de l'adresse email possède un serveur mail.
     if (!(filter_var($_POST["email"], FILTER_VALIDATE_EMAIL) && checkdnsrr(ltrim(stristr($_POST["email"], '@'), '@'), 'MX'))) {
       $progress=false;
       array_push($message["errors"],"L'adresse email saisie n'existe pas.");
@@ -79,7 +80,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
         $_SESSION["username"]=$res["username"];
         $_SESSION["email"]=$res["email"];
         $_SESSION["profile_img"]=$res["profile_img"];
-        $profile_img = "https://www.gravatar.com/avatar/".md5(strtolower(trim($res["email"])))."?d=".urlencode($_SERVER['SERVER_NAME']."/libraries/assets/img/default.jpg")."&s=64";
+        $profile_img = "https://www.gravatar.com/avatar/".md5(strtolower(trim($res["email"])))."?d=".urlencode($_SERVER['SERVER_HOST']."/libraries/assets/img/default.jpg")."&s=64";
         $stmt = $PDOStatement->prepare("UPDATE user SET last_login_date=NOW(), ip=:ip, profile_img=:profile_img WHERE id=:id");
         $stmt->bindParam(":ip", $_SERVER['REMOTE_ADDR'], PDO::PARAM_STR);
         $stmt->bindParam(":profile_img", $profile_img, PDO::PARAM_STR);
@@ -114,7 +115,6 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
             <li><a href="../">Accueil</a></li>
             <li><a href="/index.php/forum">Forum</a></li>
             <li><a href="/index.php/messaging">Messaging</a></li>
-            <li><a href="/index.php/galerie">Galerie</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="<?=isset($_SESSION['id'])?"connected":"disconnected"?>">
@@ -218,7 +218,7 @@ if (isset($_POST["username"]) && isset($_POST["password"])) {
             }
             if (isset($_POST["confirm-code"])) {
               if (strtoupper($_POST["confirm-code"])==$_SESSION["temp_confirm_code"]) {
-                $profile_img = "https://www.gravatar.com/avatar/".md5(strtolower(trim($_SESSION["temp_email"])))."?d=".urlencode($_SERVER['SERVER_NAME']."/libraries/assets/img/default.jpg")."&s=64";
+                $profile_img = "https://www.gravatar.com/avatar/".md5(strtolower(trim($_SESSION["temp_email"])))."?d=".urlencode($_SERVER['SERVER_HOST']."/libraries/assets/img/default.jpg")."&s=64";
                 $stmt = $PDOStatement->prepare("INSERT INTO user (username, password, email, registration_date, last_login_date, profile_img, ip) VALUES (:username, :password, :email, NOW(), NOW(), :profile_img, :ip)");
                 $stmt->bindParam(":username", $_SESSION["temp_username"], PDO::PARAM_STR);
                 $stmt->bindParam(":password", md5($_SESSION["temp_password"]), PDO::PARAM_STR);

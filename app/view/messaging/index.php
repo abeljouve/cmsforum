@@ -43,7 +43,6 @@
     //Case where we add a message
     var id = "<?=$_SESSION['id']?>";
     $('#envoyer').click(function() {
-      alert("coucou"+$('#type').val());
         $.ajax({
             url: "../../../app/model/messaging/index.php",
             method: "POST",
