@@ -16,14 +16,14 @@ class GestMessage{
 
      public function getMessages(){
           $pdo = db::getInstance();
-          $sth = $pdo->prepare("SELECT messaging.*, user.username, user.profile_img FROM messaging INNER JOIN user ON messaging.author_id=user.id ORDER BY message_date");
+          $sth = $pdo->prepare("SELECT messaging.*, user.username, user.profile_img FROM messaging INNER JOIN user ON messaging.author_id=user.id ORDER BY id ASC LIMIT 20");
           $sth->execute();
           return json_encode($sth->fetchAll());
      }
 
      public function getConnectedUser(){
          $pdo = db::getInstance();
-          $sth = $pdo->prepare("SELECT username, profile_img FROM user WHERE datediff(minute,NOW(),last_login_date) < 5");
+          $sth = $pdo->prepare("SELECT username, profile_img FROM user WHERE ROUND(TIME_TO_SEC(timediff(NOW(), last_login_date))/60) < 5");
           $sth->execute();
           return json_encode($sth->fetchAll());
      }

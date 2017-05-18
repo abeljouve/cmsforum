@@ -100,7 +100,7 @@ span {
     border-width: 1px;
     border-style: solid;
     border: none;
-    box-shadow: black 2px 2px 1px;
+    box-shadow: black 2px 2px 5px;
     word-wrap: break-word;
     z-index: 4;
     margin-bottom: 10px;
