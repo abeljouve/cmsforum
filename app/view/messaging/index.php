@@ -48,6 +48,7 @@
             method: "POST",
             data: { action: "push_message", content: $('#type').val(), id:id }
         });
+        $('.messaging_messages_space').animate({scrollTop:$(document).height()}, 'slow');  //scroll to the bottom of the chat
     });
     var html = $(".messaging_messages_space").html();
     setInterval(function() {
@@ -74,15 +75,18 @@
                     html="";
                     for (i = 0; i < data.length; i++) {
                         if (data[i]["author_id"] == id) {
-                            html+="<span class=\"right\"><div class=\"profanddate\"><p>" + data[i]["username"] + "</p><img alt='"+count+"' src='" + data[i]["profile_img"] + "' class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>";
+                            html+="<img alt='"+count+"' src='" + data[i]["profile_img"] + "' class=\"profimgr\"><span class=\"right\"><div class=\"profanddate\"><p style='float: right;'>" + data[i]["message_date"] + "<p style='font-weight: bold;'>" + data[i]["username"] + "</p></p></div><p class='messcontent'>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>";
                         } else {
-                            html+="<span class=\"left\"><div class=\"profanddate\"><p>" + data[i]["username"] + "</p><img alt='"+count+"' src='" + data[i]["profile_img"] + "' class=\"profimg\"><p class=\"date\">" + data[i]["message_date"] + "</p></div><p>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>";
+                            html+="<img alt='"+count+"' src='" + data[i]["profile_img"] + "' class=\"profimgl\"><span class=\"left\"><div class=\"profanddate\"><p style='float: right;'>" + data[i]["message_date"] + "<p style='font-weight: bold;'>" + data[i]["username"] + "</p></p></div><p class='messcontent'>" + data[i]["message"] + "<p></p></span><div class=\"clear\"></div>";
                         }
                     }
                 }
             });
             $(".messaging_messages_space").html(html);
+            $('html, body').animate({scrollTop:$(document).height()}, 'slow'); //Scroll to the bottom of the page
+            
         }, 1000);
+        $('.messaging_messages_space').animate({scrollTop:$(document).height()}, 'slow');  //scroll to the bottom of the chat
     </script>
     <?php } else{ ?>
         <h1>Pour pouvoir utiliser le service de messagerie instantan&eacutee veuillez vous connecter svp</h1>
