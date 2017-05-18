@@ -49,13 +49,13 @@ class ForumController{
           							<li style=\"height:50px;\">
           									<dl>
           										<dt style=\"float:left;width: 560px;height: 100%;\" class=\"forum_subcategory_title\">
-          											<a href=\"forum?action=topics&subcat=".$subcat->id.">".html_entity_decode($subcat->name)."</a><br>
+          											<a href='forum?action=topics&subcat=".$subcat->id."'>".html_entity_decode($subcat->name)."</a><br>
           											<p class=\"forum_subcategory_desc\">".html_entity_decode($subcat->description)."</p>
           										</dt>
           										<dd style=\"float:left;width: 70px;text-align: center;font-size:11px\">".$this->getTopicCountSubCategoryId($subcat->id)."<p>Topics</p></dd>
           										<dd style=\"float:left;width: 70px;text-align: center;font-size:11px\">".$this->getMessageCountSubCategoryId($subcat->id)."<p>Posts</p></dd>
           										<dd style=\"float:left;width: 322px;padding: 5px 3px 3px 15px;font-size: 12px;\">
-          											<a href=\"#\">".html_entity_decode($subcat->last_topic)."</a><br>".$subcat->last_reply_creation_date."&nbsp;<a href=\"#\">".$subcat->last_reply_author."</a>
+          											<a href=\"#\">".html_entity_decode($subcat->last_topic)."</a><br>".ucfirst(strftime('%A %d %B %Y %H:%M',strtotime($subcat->last_reply_creation_date)))."&nbsp;<a href=\"#\">".$subcat->last_reply_author."</a>
           										</dd>
           									</dl>
           								</li>
@@ -69,8 +69,11 @@ class ForumController{
         case ("topics"):
 
             if (isset($_GET['subcat'])){
-
-                $menu = "<ul class=\"topiclist\">";
+                $menu="<div class=\"fil_arriane\">
+                  <a href=\"forum\">Index</a>&nbsp;&#9654;&nbsp;
+                  <span>".html_entity_decode($this->getSubCategoriesById($_GET['subcat'])[0]["name"])."</span>
+                </div>";
+                $menu.= "<ul class=\"topiclist\">";
                 $_topics = $this->getTopicsBySubCategoryId($_GET['subcat']);
 
                 foreach ($_topics as $_topic){
@@ -81,18 +84,15 @@ class ForumController{
                         $last_reply = $this->getTopicAuthorByTopicId($_topic['id']);
                     }
                     $menu.= "<li>
-              			<a href=\"index.php?view_topic=".$_topic["id"]."\"></a>
+              			<a href='forum?action=post&topic=".$_topic["id"]."'></a>
               			<dl>
-              				<a href=\"index.php?view_topic=".$_topic["id"]."\">
+              				<a href='forum?action=post&topic=".$_topic["id"]."'>
               					<dt>".html_entity_decode($_topic['name'])."</dt>
               				</a>
               				<dd class=\"reponse\">".$this->getReplyCountByTopic($_topic["id"])."<p>Reponses</p></dd>
-              				<dd class=\"auteur\>".html_entity_decode($_topic['author'])."</dd>
+              				<dd class=\"auteur\">".html_entity_decode($_topic['author'])."</dd>
               				<dd class=\"lastpost\">
-              					<div class=\"beurk\">
-              					".ucfirst(strftime('%A %d %B %Y %H:%M',strtotime($_topic['creation_date'])))."<br>
-              					Dernier message par:<a href='#'>".html_entity_decode($last_reply["name"])."</a>
-              					</div>
+              					<div class=\"beurk\">".ucfirst(strftime('%A %d %B %Y %H:%M',strtotime($_topic['creation_date'])))."<br>Dernier message par:&nbsp;<a href='#'>".html_entity_decode($last_reply["name"])."</a></div>
               				</dd>
               			</dl>
               			</li>";
@@ -102,6 +102,19 @@ class ForumController{
             include "./app/view/forum/topics.php";
         }
         break;
+      case ("post"):
+      if (isset($_GET['topic'])){
+        $topic = $this->getTopicById($_GET['topic']);
+        $menu="<div class=\"fil_arriane\">
+          <a href=\"forum\">Index</a>&nbsp;&#9654;&nbsp;
+          <a href=\"forum\">".html_entity_decode($this->getCatSubCatNameByTopicId($_GET['topic'])["name"])."</a>&nbsp;&#9654;&nbsp;
+          <a href=\"forum?action=topics&subcat=".$topic["id_sub_category"]."\">".html_entity_decode($this->getCatSubCatNameByTopicId($_GET['topic'])[0])."</a>&nbsp;&#9654;&nbsp;
+          <span>".html_entity_decode($topic["name"])."</span>
+          </div>";
+        $menu.= "En cours de développement";
+        include "./app/view/forum/post.php";
+      }
+      break;
 
 }
 }
@@ -146,6 +159,13 @@ public function getSubCategoriesByCategoryId($id){
     $res = $query->fetchAll();
     return $res;
 }
+public function getSubCategoriesById($id){
+    $pdo = Db::getInstance();
+    $query = $pdo->prepare("SELECT id, name, description FROM sub_category WHERE id = ? ORDER BY position");
+    $query->execute([$id]);
+    $res = $query->fetchAll();
+    return $res;
+}
 
 public function getLastTopicBySubCategoryId($id){
     $pdo = Db::getInstance();
@@ -178,5 +198,20 @@ public function getTopicAuthorByTopicId($id){
     $res = $query->fetch();
     return $res;
 }
+public function getTopicById($id){
+    $pdo = Db::getInstance();
+    $query = $pdo->prepare("SELECT * FROM topic WHERE id = ? ");
+    $query->execute([$id]);
+    $res = $query->fetch();
+    return $res;
+}
+public function getCatSubCatNameByTopicId($id){
+    $pdo = Db::getInstance();
+    $query = $pdo->prepare("SELECT category.name, sub_category.name FROM topic INNER JOIN sub_category ON topic.id_sub_category=sub_category.id INNER JOIN category ON sub_category.id_category=category.id WHERE topic.id = ? ");
+    $query->execute([$id]);
+    $res = $query->fetch();
+    return $res;
+}
+
 }
 ?>

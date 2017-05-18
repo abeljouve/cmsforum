@@ -1,5 +1,1 @@
-<?php
-
-echo $menu;
-
-?>
+<div class="forum-bloc"><?=$menu?></div>

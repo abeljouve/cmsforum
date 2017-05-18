@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
   <?php include(META); ?>
     <link rel="icon" href="<?=FAVICON?>">
